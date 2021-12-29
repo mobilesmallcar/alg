@@ -11,18 +11,12 @@ import java.util.Arrays;
  */
 public class HellSort {
     public static void main(String[] args) {
-        int[] arr = {8, 9, 1, 7, 2, 3, 10,5, 4, 6, 0};
+        int[] arr = {8, 9, 1, 7, 2, 3, 10, 5, 4, 6, 0};
         //分步骤
-        //hellSort(arr);
-//        hellSortAll(arr);
+//        hellSort(arr);
+        hellSortAll(arr);
 //        upgradeHellSort2(arr);
-//        int count = 1;
-//        do{
-//            count++;
-//        }while(count<6);
-//        System.out.println(count);
-        BigDecimal d = new BigDecimal("-1");
-        System.out.println(BigDecimal.ZERO.subtract(d));
+
     }
 
     // 希尔排序--> 思路分析: 以组为单位进行插入排序两种实现，第一种交换法，第二种简单插入法
@@ -56,19 +50,20 @@ public class HellSort {
 
                 temp = arr[i];
                 for (int j = i - group; j >= 0; j -= group) {
-                    if (arr[j] > arr[j+group]) {
-                        arr[j+group] = arr[j];
+                    if (arr[j] > arr[j + group]) {
+                        arr[j + group] = arr[j];
                         cur -= group;
                     }
                 }
-                if(cur!=i){
+                if (cur != i) {
                     arr[cur] = temp;
                 }
             }
-            group = group /2;
+            group = group / 2;
         }
         System.out.println(Arrays.toString(arr));
     }
+
     private static void upgradeHellSort2(int arr[]) {
         int temp = 0;
         int group = arr.length / 2;
@@ -76,13 +71,13 @@ public class HellSort {
             for (int i = 0; i < arr.length; i++) {
                 int cur = i;
                 temp = arr[i];
-                while(i-group>=0 && temp>arr[i-group]){
-                    arr[i] = arr[i-group];
+                while (i - group >= 0 && temp > arr[i - group]) {
+                    arr[i] = arr[i - group];
                     cur -= group;
                 }
-                arr[cur+group] = temp;
+                arr[cur + group] = temp;
             }
-            group = group /2;
+            group = group / 2;
         }
         System.out.println(Arrays.toString(arr));
     }
