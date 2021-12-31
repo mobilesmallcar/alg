@@ -1,5 +1,6 @@
 package com.shaw.seekSort.day02;
 
+
 import static com.shaw.seekSort.day02.BinaryTreeDemo.isNewLine;
 
 /**
@@ -9,20 +10,21 @@ import static com.shaw.seekSort.day02.BinaryTreeDemo.isNewLine;
  * the corresponding img is ./img/BinaryTree.png
  */
 public class BinaryTreeDemo {
-    public static final String isNewLine = "";//如果采用打印对象的方式这里填写\n，默认不填
+    public static String isNewLine = "";//是否换行
+
     public static void main(String[] args) {
         // 先创建一棵二叉树
         BinaryTree binaryTree = new BinaryTree();
         // 创建需要的节点
-        HeroNode root = new HeroNode(1,"A");
-        HeroNode B = new HeroNode(2,"B");
-        HeroNode C = new HeroNode(3,"C");
-        HeroNode D = new HeroNode(4,"D");
-        HeroNode E = new HeroNode(5,"E");
-        HeroNode F = new HeroNode(6,"F");
-        HeroNode G = new HeroNode(7,"G");
-        HeroNode H = new HeroNode(8,"H");
-        HeroNode I = new HeroNode(9,"I");
+        HeroNode root = new HeroNode(1, "A");
+        HeroNode B = new HeroNode(2, "B");
+        HeroNode C = new HeroNode(3, "C");
+        HeroNode D = new HeroNode(4, "D");
+        HeroNode E = new HeroNode(5, "E");
+        HeroNode F = new HeroNode(6, "F");
+        HeroNode G = new HeroNode(7, "G");
+        HeroNode H = new HeroNode(8, "H");
+        HeroNode I = new HeroNode(9, "I");
 
         // 这里先手动创建二叉树,后面采用递归优化
         root.left = B;
@@ -45,26 +47,72 @@ public class BinaryTreeDemo {
         System.out.println("\n后序遍历: "); // F->H->I->G->D->E->B->C->A
         binaryTree.postOrder();
         System.out.println();
+
+
+        //查找
+        HeroNode heroNode;
+        heroNode = binaryTree.preOrderSearch(5);
+//        heroNode = binaryTree.infixOrderSearch(10);
+//        heroNode = binaryTree.postOrderSearch(5);
+        if (heroNode != null) {
+            System.out.println("找到该节点 :" + heroNode.toString());
+        } else {
+            System.out.println("没有该节点哦");
+        }
+
+        //删除
+        System.out.println("\n\n节点删除后,进行前序遍历:");
+        binaryTree.delete(4);
+        binaryTree.preOrder();
     }
 }
-class BinaryTree{
+
+class BinaryTree {
     private HeroNode root;
-    public void setRoot(HeroNode root){
+
+    public void setRoot(HeroNode root) {
         this.root = root;
     }
 
-    public void preOrder(){
-        this.callNode(1);
+    public void preOrder() {
+        this.callNodeList(1);
     }
-    public void infixOrder(){
-        this.callNode(2);
+
+    public void infixOrder() {
+        this.callNodeList(2);
     }
-    public void postOrder(){
-        this.callNode(3);
+
+    public void postOrder() {
+        this.callNodeList(3);
     }
-    private void callNode(int which){
-        if(this.root != null){
-            switch(which){
+
+    public HeroNode preOrderSearch(int no) {
+        return this.callNodeSearch(1, no);
+    }
+
+    public HeroNode infixOrderSearch(int no) {
+        return this.callNodeSearch(2, no);
+    }
+
+    public HeroNode postOrderSearch(int no) {
+        return this.callNodeSearch(3, no);
+    }
+
+    public void delete(int no) {
+        if (this.root == null) {
+            System.out.println("节点都没有,删不了");
+        } else {
+            if (this.root.no == no) {
+                root = null;
+            } else {
+                root.delete(no);
+            }
+        }
+    }
+
+    private void callNodeList(int which) {
+        if (this.root != null) {
+            switch (which) {
                 case 1:
                     root.preOrder();
                     break;
@@ -75,69 +123,175 @@ class BinaryTree{
                     root.postOrder();
                     break;
             }
-        }else{
+        } else {
             System.out.println("二叉树为空 无法遍历");
         }
     }
+
+    private HeroNode callNodeSearch(int which, int no) {
+        if (root != null) {
+            switch (which) {
+                case 1:
+                    System.out.println("进入前序遍历查找:");
+                    return root.preOrderSearch(no);
+                case 2:
+                    System.out.println("进入中序遍历查找:");
+                    return root.infixOrderSearch(no);
+                case 3:
+                    System.out.println("进入后序遍历查找:");
+                    return root.postOrderSearch(no);
+                default:
+                    throw new RuntimeException("非法请求");
+            }
+        } else {
+            return null;
+        }
+    }
 }
-class HeroNode{
+
+class HeroNode {
     public int no;
     public String name;
     public HeroNode left;
     public HeroNode right;
 
-    public HeroNode(int no,String name){
+    public HeroNode(int no, String name) {
         this.no = no;
         this.name = name;
     }
-    //前序遍历
-    public void preOrder(){
+
+    //前中后遍历
+    public void preOrder() {
         this.print();
         //递归遍历左子树
-        if(this.left != null){
+        if (this.left != null) {
             this.left.preOrder();
         }
         //递归遍历右子树
-        if(this.right != null){
+        if (this.right != null) {
             this.right.preOrder();
         }
     }
-    public void infixOrder(){
+
+    public void infixOrder() {
         //递归遍历左子树
-        if(this.left != null){
+        if (this.left != null) {
             this.left.infixOrder();
         }
         this.print();
         //递归遍历右子树
-        if(this.right != null){
+        if (this.right != null) {
             this.right.infixOrder();
         }
     }
-    public void postOrder(){
+
+    public void postOrder() {
         //递归遍历左子树
-        if(this.left != null){
+        if (this.left != null) {
             this.left.postOrder();
         }
         //递归遍历右子树
-        if(this.right != null){
+        if (this.right != null) {
             this.right.postOrder();
         }
         this.print();
     }
-    public void print(){
-        System.out.print(this+isNewLine);
+
+    //前中后搜索
+    public HeroNode preOrderSearch(int no) {
+        if (this.no == no) {
+            return this;
+        }
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.right != null) {
+            resNode = this.right.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        return null;
+    }
+
+    public HeroNode infixOrderSearch(int no) {
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.no == no) {
+            return this;
+        }
+        if (this.right != null) {
+            resNode = this.right.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        return null;
+    }
+
+    public HeroNode postOrderSearch(int no) {
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.right != null) {
+            resNode = this.right.preOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        if (this.no == no) {
+            return this;
+        }
+        return null;
+    }
+
+    public void delete(int no) {
+        if (this.left != null && this.left.no == no){//左边退出条件
+            this.left = null;
+            return;
+        }
+        else if(this.right != null && this.right.no == no){//右边退出条件
+            this.right = null;
+            return;
+        }else{
+        if(this.left != null){
+            this.left.delete(no);
+        }
+        if(this.right != null){
+            this.right.delete(no);
+        }}
+    }
+
+    public void print() {
+        System.out.print(this + isNewLine);
+    }
+
+    @Override
+    public String toString() {
+        isNewLine = "\n";
+        return "HeroNode{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+//                ", left=" + left +
+//                ", right=" + right +
+                '}';
     }
 //    @Override
 //    public String toString() {
-//        return "HeroNode{" +
-//                "no=" + no +
-//                ", name='" + name + '\'' +
-////                ", left=" + left +
-////                ", right=" + right +
-//                '}';
+//        return   name +"->";
 //    }
-    @Override
-    public String toString() {
-        return   name +"->";
-    }
 }
+
