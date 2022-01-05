@@ -42,11 +42,14 @@ public class ThreadBinaryTreeDemo {
         tree.preSearch(5);
         //开始编写
         //先编写中序线索二叉树
-        tree.infixThreadTree(root);
-        System.out.println("后继遍历线中序索化二叉树开始:");
-        tree.infixThreadList1(root);
-        System.out.println("前驱遍历线中序索化二叉树开始:");
-        tree.infixThreadList2(root);
+//        tree.infixThreadTree(root);
+//        System.out.println("后继遍历中序线索化二叉树开始:");
+//        tree.infixThreadList1(root);
+//        System.out.println("前驱遍历中序线索化二叉树开始:");
+//        tree.infixThreadList2(root);
+        tree.preThreadTree(root);
+        System.out.println("后继遍历前序线索化二叉树开始:");
+        tree.preThreadList(root);
     }
 }
 
@@ -83,7 +86,7 @@ class ThreadBinaryTree {
     }
 
     /**
-     * 通过前序线索化二叉树
+     * 通过中序线索化二叉树
      *
      * @param node
      */
@@ -132,20 +135,62 @@ class ThreadBinaryTree {
      * 通过前驱方式遍历，找到右节点
      */
     public void infixThreadList2(HeroNode node) {
-        while (node.right != null && !node.isRightThread){
+        while (node.right != null && !node.isRightThread) {
             node = node.right;
         }
-        while(node != null){
-            System.out.println(node+",");
+        while (node != null) {
+            System.out.println(node + ",");
 
-            if(node.isLeftThread){
+            if (node.isLeftThread) {
                 node = node.left;
-            }else{
+            } else {
                 node = node.left;
-                while(node != null && !node.isRightThread ){
+                while (node != null && !node.isRightThread) {
                     node = node.right;
                 }
             }
+        }
+    }
+
+    /**
+     * 通过前序生成二叉树
+     *
+     * @param node
+     */
+    public void preThreadTree(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+        if (node.left == null) {
+            node.left = preNode;
+            node.isLeftThread = true;
+        }
+        if (preNode != null && preNode.right == null) {
+            preNode.right = node;
+            preNode.isRightThread = true;
+        }
+        preNode = node;
+        if (!node.isLeftThread) {
+            preThreadTree(node.left);
+        }
+        if (!node.isRightThread) {
+            preThreadTree(node.right);
+        }
+    }
+
+    /**
+     * 通过前序遍历二叉树
+     *
+     * @param node
+     */
+    public void preThreadList(HeroNode node) {
+        while (node != null) {
+            while (!node.isLeftThread) {
+                System.out.println(node + ",");
+                node = node.left;
+            }
+            System.out.println(node + ",");
+            node = node.right;
         }
     }
 }
