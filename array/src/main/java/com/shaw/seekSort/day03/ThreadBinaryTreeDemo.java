@@ -43,8 +43,10 @@ public class ThreadBinaryTreeDemo {
         //开始编写
         //先编写中序线索二叉树
         tree.infixThreadTree(root);
-        System.out.println("前缀遍历线中序索化二叉树开始:");
+        System.out.println("后继遍历线中序索化二叉树开始:");
         tree.infixThreadList1(root);
+        System.out.println("前驱遍历线中序索化二叉树开始:");
+        tree.infixThreadList2(root);
     }
 }
 
@@ -107,7 +109,7 @@ class ThreadBinaryTree {
      * 通过后继方式遍历，找到左节点
      */
     public void infixThreadList1(HeroNode node) {
-        while (node != null && !node.isLeftThread) {
+        while (node.left != null && !node.isLeftThread) {
             node = node.left;
         }
         while (node != null) {
@@ -119,7 +121,7 @@ class ThreadBinaryTree {
             } else {
                 node = node.right;
                 while (node != null && !node.isLeftThread) {//如果当前节点不为空，
-                    // isLeftThread为默认的 !isLeftThread true，说明下面还有就继续进行遍历
+                    // isLeftThread为默认的 =>!isLeftThread true，说明下面还有就继续进行遍历
                     node = node.left;
                 }
             }
@@ -129,9 +131,21 @@ class ThreadBinaryTree {
     /**
      * 通过前驱方式遍历，找到右节点
      */
-    public void infixThreadList2() {
-        if (root == null) {
-            return;
+    public void infixThreadList2(HeroNode node) {
+        while (node.right != null && !node.isRightThread){
+            node = node.right;
+        }
+        while(node != null){
+            System.out.println(node+",");
+
+            if(node.isLeftThread){
+                node = node.left;
+            }else{
+                node = node.left;
+                while(node != null && !node.isRightThread ){
+                    node = node.right;
+                }
+            }
         }
     }
 }
