@@ -37,19 +37,21 @@ public class ThreadBinaryTreeDemo {
         G.right = I;
         tree.setRoot(root);
         tree.preOrder();
-        tree.infixOrder();
         tree.postOrder();
         tree.preSearch(5);
         //开始编写
         //先编写中序线索二叉树
-//        tree.infixThreadTree(root);
-//        System.out.println("后继遍历中序线索化二叉树开始:");
-//        tree.infixThreadList1(root);
-//        System.out.println("前驱遍历中序线索化二叉树开始:");
-//        tree.infixThreadList2(root);
-        tree.preThreadTree(root);
-        System.out.println("后继遍历前序线索化二叉树开始:");
-        tree.preThreadList(root);
+        tree.infixThreadTree(root);
+        System.out.println("后继遍历中序线索化二叉树开始:");
+        tree.infixThreadList1(root);
+        System.out.println("=====================================");
+        tree.infixThreadListOverWrite(root);
+        System.out.println("前驱遍历中序线索化二叉树开始:");
+        tree.infixThreadList2(root);
+//        //=================================
+//        tree.preThreadTree(root);
+//        System.out.println("后继遍历前序线索化二叉树开始:");
+//        tree.preThreadList(root);
     }
 }
 
@@ -128,6 +130,24 @@ class ThreadBinaryTree {
                     node = node.left;
                 }
             }
+        }
+    }
+
+    /**
+     * 简化 方法->>infixThreadList1 的while循环写法
+     * @param node
+     */
+    public void infixThreadListOverWrite(HeroNode node){
+        while(node != null){
+            while(!node.isLeftThread){
+                node = node.left;
+            }
+            System.out.println(node+",");
+            while(node.isRightThread){
+                node = node.right;
+                System.out.println(node+",");
+            }
+            node = node.right;
         }
     }
 
