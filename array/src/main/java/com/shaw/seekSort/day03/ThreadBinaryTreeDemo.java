@@ -9,7 +9,7 @@ package com.shaw.seekSort.day03;
 // -------> 1.处理左子树
 // -------> 2.处理当前节点: 处理当前节点的左节点；处理当前节点的上级节点; 赋值上级节点
 // -------> 3.处理右子树
-
+//todo -->还欠缺后序线索化二叉树
 public class ThreadBinaryTreeDemo {
     public static void main(String[] args) {
         ThreadBinaryTree tree = new ThreadBinaryTree();
