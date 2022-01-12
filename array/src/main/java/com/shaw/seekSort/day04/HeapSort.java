@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @author: xsy
  * @Date: 2022/1/10
- * @description: the sort of heaping use completed Binary Tree
+ * @description: the sort of heap use completed Binary Tree
  */
 public class HeapSort {
     public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class HeapSort {
 
     // 编写一个堆排序的方法
     public static void heapSort(int arr[]) {
-        for (int i = arr.length / 2; i >= 0; i--) {//参见图片adjustHeap.png
+        for (int i = arr.length / 2; i >= 0; i--) {
             adjustHeap(arr, i, arr.length);
         }
         System.out.println(Arrays.toString(arr));
