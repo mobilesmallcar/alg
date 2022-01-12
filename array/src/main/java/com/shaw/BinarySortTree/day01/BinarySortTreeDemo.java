@@ -7,7 +7,7 @@ package com.shaw.BinarySortTree.day01;
  */
 public class BinarySortTreeDemo {
     public static void main(String[] args) {
-        int[] arr = { 9,7, 3, 10, 12,4, 5, 1};
+        int[] arr = {7, 3, 10, 12, 5, 1, 9, 4};
         BinarySortTree binarySortTree = new BinarySortTree();
         for (int a : arr) {
             binarySortTree.add(new Node(a));
