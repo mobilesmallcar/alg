@@ -14,8 +14,8 @@ public class HellSort {
         int[] arr = {8, 9, 1, 7, 2, 3, 10, 5, 4, 6, 0};
         //分步骤
 //        hellSort(arr);
-        hellSortAll(arr);
-//        upgradeHellSort2(arr);
+//        hellSortAll(arr);
+        upgradeHellSort(arr);
 
     }
 
@@ -50,7 +50,7 @@ public class HellSort {
 
                 temp = arr[i];
                 for (int j = i - group; j >= 0; j -= group) {
-                    if (arr[j] > arr[j + group]) {
+                    if (temp < arr[j]) {
                         arr[j + group] = arr[j];
                         cur -= group;
                     }
@@ -71,11 +71,13 @@ public class HellSort {
             for (int i = 0; i < arr.length; i++) {
                 int cur = i;
                 temp = arr[i];
-                while (i - group >= 0 && temp > arr[i - group]) {
-                    arr[i] = arr[i - group];
+                while (cur - group >= 0 && temp < arr[cur - group]) {
+                    arr[cur] = arr[cur - group];
                     cur -= group;
                 }
-                arr[cur + group] = temp;
+                if(cur != i){
+                    arr[cur] = temp;
+                }
             }
             group = group / 2;
         }
